@@ -1,0 +1,108 @@
+
+# backend hello service deployment file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-hello
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-hello
+  template:
+    metadata:
+      labels:
+        app: backend-hello
+    spec:
+      containers:
+      - name: backend-hello
+        image: flowerking21/micro_backend_helloservice:latest
+        ports:
+        - containerPort: 4200
+---
+# backend hello service service  file
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-helloservice
+spec:
+  selector:
+    app: backend-hello
+  ports:
+  - port: 4200
+    targetPort: 4200
+  type: NodePort
+
+---
+# backend profile  service deployment file
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-profile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-profile
+  template:
+    metadata:
+      labels:
+        app: backend-profile
+    spec:
+      containers:
+      - name: backend-profile
+        image: flowerking21/micro_backend_profileservice:latest
+        ports:
+        - containerPort: 4201
+
+---
+# backend profile  service service file
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-profileservice
+spec:
+  selector:
+    app: backend-profile
+  ports:
+  - port: 4201
+    targetPort: 4201
+  type: NodePort
+
+---
+# frontend service deployment file
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: flowerking21/micro_frontendservice:latest
+        ports:
+        - containerPort: 3000
+
+--- 
+# frontend service file
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: ClusterIP

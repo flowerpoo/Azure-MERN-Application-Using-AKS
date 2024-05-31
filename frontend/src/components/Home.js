@@ -7,7 +7,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4200/")
+      .get("http://hello.flowerking.shop:4200/") 
       .then((response) => {
         setMessage(response.data.msg);
       })
@@ -16,7 +16,7 @@ function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4201/fetchUser")
+      .get("http://profile.flowerking.shop:4201/fetchuser")
       .then((response) => {
         setProfile(response.data);
         
